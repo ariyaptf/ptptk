@@ -1,0 +1,28 @@
+/* Add your custom styles here */
+
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@import url("fonts.css");
+
+body, p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sarabun', sans-serif;
+}
+
+.nav-item {
+  /* Your additional styles here */
+  font-family: "Sarabun", sans-serif;
+  font-weight: 400;
+}
+
+.nav-item .nav-link.active {
+  color: brown; /* สีแดง */
+}
+
+/* Adds a bit of spacing to "Responsive Grid Row" blocks. */
+.crx-grid {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.crx-grid .crx-grid {
+  padding-top: 0;
+  padding-bottom: 0;
+}
