@@ -3,94 +3,116 @@
     font-weight: 100;
     font-style: normal;
   }
-  
+
   .sarabun-thin-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 100;
     font-style: italic;
   }
-  
+
   .sarabun-extralight {
     font-family: "Sarabun", sans-serif;
     font-weight: 200;
     font-style: normal;
   }
-  
+
   .sarabun-extralight-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 200;
     font-style: italic;
   }
-  
+
   .sarabun-light {
     font-family: "Sarabun", sans-serif;
     font-weight: 300;
     font-style: normal;
   }
-  
+
   .sarabun-light-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 300;
     font-style: italic;
   }
-  
+
   .sarabun-regular {
     font-family: "Sarabun", sans-serif;
     font-weight: 400;
     font-style: normal;
   }
-  
+
   .sarabun-regular-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 400;
     font-style: italic;
   }
-  
+
   .sarabun-medium {
     font-family: "Sarabun", sans-serif;
     font-weight: 500;
     font-style: normal;
   }
-  
+
   .sarabun-medium-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 500;
     font-style: italic;
   }
-  
+
   .sarabun-semibold {
     font-family: "Sarabun", sans-serif;
     font-weight: 600;
     font-style: normal;
   }
-  
+
   .sarabun-semibold-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 600;
     font-style: italic;
   }
-  
+
   .sarabun-bold {
     font-family: "Sarabun", sans-serif;
     font-weight: 700;
     font-style: normal;
   }
-  
+
   .sarabun-bold-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 700;
     font-style: italic;
   }
-  
+
   .sarabun-extrabold {
     font-family: "Sarabun", sans-serif;
     font-weight: 800;
     font-style: normal;
   }
-  
+
   .sarabun-extrabold-italic {
     font-family: "Sarabun", sans-serif;
     font-weight: 800;
     font-style: italic;
   }
-  
+
+
+@media (max-width: 768px) {
+  .text-mobile-12-16 {
+    font-size: 12px !important;
+  }
+
+  .text-mobile-18-22 {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 769px) {
+  .text-mobile-12-16 {
+    font-size: 16px !important;
+  }
+
+  .text-mobile-18-22 {
+    font-size: 22px;
+  }
+}
+
+
