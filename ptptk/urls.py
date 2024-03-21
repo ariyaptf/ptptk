@@ -16,6 +16,8 @@ urlpatterns = [
     path("docs/", include(wagtaildocs_urls)),
     # Search
     path("search/", include(crx_search_urls)),
+    # Pandham
+    path("pandham/", include('pandham.urls')),
     # For anything not caught by a more specific rule above, hand over to
     # the page serving mechanism. This should be the last pattern in
     # the list:

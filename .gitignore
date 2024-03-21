@@ -399,3 +399,5 @@ cache/
 
 # Collected static files
 # /static/
+
+.env

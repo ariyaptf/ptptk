@@ -1,0 +1,48 @@
+{% extends "coderedcms/pages/pandham.html" %}
+{% load i18n crispy_forms_tags static %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-3">
+                <h3>ขอรับปันธรรม</h3>
+                <!-- แสดงค่า book_inventory เป็นข้อความ -->
+                <div class="sarabun-bold pt-3">
+                    {{ book.book_name }}
+                </div>
+                <div class="sarabun-thin">
+                    {{ book.description }}
+                </div>
+                <div class="sarabun-thin">
+                    {{ book.prerequisites }}
+                </div>
+                <!-- แสดงข้อความตอบกลับหลังจาก submit form -->
+                {% if result %}
+                    <div class="alert alert-info" role="alert">
+                        {{ result }}
+                    </div>
+                {% endif %}
+
+                <div class="page-content my-3">
+                    {% if inventory_stock %}
+                        {% if not pandham_stock %}
+                            <div class="alert alert-danger" role="alert">
+                                ขณะนี้หนังสือสำหรับปันธรรมมีไม่เพียงพอ ระบบจะบันทึกชื่อของท่านลงบัญชีผู้รอรับปันธรรม และทันทีที่มีหนังสือเพิ่มเข้ามา, ทางมูลนิธิฯ จะดำเนินการจัดส่งหนังสือให้ตามลำดับ
+                            </div>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+                        </form>
+                    {% else %}
+                        <div class="secondary">
+                            <div class="pb-3">หนังสือสำหรับปันธรรมมีไม่เพียงพอ</div>
+                            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">{% trans 'Go Back' %}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

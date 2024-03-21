@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 
 
@@ -26,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 INSTALLED_APPS = [
     # This project
     "website",
+    "pandham",
     # Wagtail CRX (CodeRed Extensions)
     "coderedcms",
     "django_bootstrap5",
@@ -35,6 +38,7 @@ INSTALLED_APPS = [
     "wagtailseo",
     # Wagtail
     "wagtail.contrib.forms",
+    "wagtailstreamforms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
     "wagtail.sites",
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.settings",
     "wagtail.contrib.table_block",
     "wagtail.admin",
+    "wagtail_modeladmin",
     # Django
     "django.contrib.admin",
     "django.contrib.auth",
@@ -55,6 +60,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    # Third-party
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "django_extensions",
+    "django_htmx",
+    "formtools",
 ]
 
 MIDDLEWARE = [
@@ -73,6 +84,8 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     # Fetch from cache. Must be LAST.
     "wagtailcache.cache.FetchFromCacheMiddleware",
+    # HTMX
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = "ptptk.urls"
@@ -131,9 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "America/New_York"
+TIME_ZONE = "Asia/Bangkok"
 
-USE_I18N = False
+USE_I18N = True
 
 USE_TZ = True
 
@@ -181,3 +194,8 @@ TAGGIT_CASE_INSENSITIVE = True
 # Sets default for primary key IDs
 # See https://docs.djangoproject.com/en/5.0/ref/models/fields/#bigautofield
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

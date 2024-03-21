@@ -1,0 +1,40 @@
+{% extends "coderedcms/pages/pandham.html" %}
+{% load i18n crispy_forms_tags static %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-3">
+                <h3>{% trans 'ร่วมปันธรรม' %}</h3>
+                <div class="sarabun-thin small my-3">
+                    {% trans 'ร่วมสมทบทุนจัดพิมพ์และรับหนังสือ หรือมอบหนังสือบางส่วนหรือทั้งหมดให้กับมูลนิธิฯ เป็นสะพานบุญช่วยดำเนินการปันธรรม' %}
+                </div>
+                <!-- แสดงค่า book_inventory เป็นข้อความ -->
+                <div id="book_name" class="sarabun-bold">
+                    หนังสือ: {{ book_name }}
+                </div>
+
+                <input type="number" id="book_price" class="visually-hidden" value="{{ price }}" readonly>
+
+                <div class="page-content my-3">
+                    {% if current_stock %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+                        </form>
+                    {% else %}
+                        <div class="secondary">
+                            <div class="pb-3">หนังสือสำหรับปันธรรมมีไม่เพียงพอ</div>
+                            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">{% trans 'Go Back' %}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_scripts %}
+    <script src="{% static 'pandham/js/contribute.js' %}"></script>
+{% endblock %}

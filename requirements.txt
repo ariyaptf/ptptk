@@ -1,2 +1,11 @@
 coderedcms==3.0.*
 wagtail==5.2.*
+wagtail-modeladmin==2.0.0
+python-dotenv==1.0.1
+pyotp==2.9.0
+crispy-bootstrap5==2024.2
+django-formtools==2.5.1
+wagtailstreamforms==4.1.0
+django-htmx==1.17.3
+django-extensions==3.2.3
+ipython==8.22.2

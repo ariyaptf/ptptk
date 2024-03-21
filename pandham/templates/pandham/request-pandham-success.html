@@ -1,0 +1,61 @@
+{% extends "coderedcms/pages/pandham.html" %}
+{% load i18n crispy_forms_tags static %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-3">
+
+                <div class="">{{ request_pandham_success_message.content }}</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>รายละเอียด</th>
+                            <th>ข้อมูล</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>อ้างอิง</td>
+                            <td>{{ request_pandham.reference_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>หนังสือ</td>
+                            <td>{{ request_pandham.book_inventory }}</td>
+                        </tr>
+                        <tr>
+                            <td>ชื่อ</td>
+                            <td>{{ request_pandham.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>โทรศัพท์</td>
+                            <td>{{ request_pandham.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>ที่อยู่</td>
+                            <td>{{ request_pandham.shipping_address }}</td>
+                        </tr>
+                        <tr>
+                            <td>กลุ่ม</td>
+                            <td>{{ request_pandham.recipient_category }}</td>
+                        </tr>
+                        <tr>
+                            <td>สถานะ</td>
+                            <td>
+                                {% if request_pandham.is_waiting %}
+                                    รอการปันธรรม
+                                {% elif request_pandham.is_completed %}
+                                    จัดส่งปันธรรมแล้ว
+                                {% endif %}
+                            </td>
+                        </tr>
+                </table>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" onclick="window.print()">พิมพ์</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
