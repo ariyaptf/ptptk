@@ -9,3 +9,4 @@ wagtailstreamforms==4.1.0
 django-htmx==1.17.3
 django-extensions==3.2.3
 ipython==8.22.2
+line-bot-sdk==9.0.3

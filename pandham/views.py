@@ -5,10 +5,12 @@ import requests
 
 from django import forms
 from django.db import models
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import (
+    HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse)
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, FormView
 
 from wagtail.models import Page
@@ -22,10 +24,21 @@ from .models import (
     BookInventory, PandhamStock, Propagation,
     InventoryTransaction, PandhamTargetGroup, RequestPandham)
 
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError, LineBotApiError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
+
 load_dotenv()  # Load environment variables from .env file
 api_key = os.getenv("API_KEY")
 client_id = os.getenv("CLIENT_ID")
 send_sms_url = os.getenv("SEND_SMS_URL")
+
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
+
+line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 
 # =============================
@@ -80,10 +93,10 @@ class OtpService:
 
 
 # =============================
-# ฟังก์ชัน ResendOTP
+# ฟังก์ชัน resend_otp
 # สำหรับการส่ง OTP ใหม่
 # =============================
-def ResendOTP(request):
+def resend_otp(request):
     phone_number = request.GET.get('phone_number', None)
 
     if phone_number:
@@ -94,6 +107,45 @@ def ResendOTP(request):
         return JsonResponse({'status': 'success', 'message': 'OTP sent successfully.'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Phone number is required.'})
+
+
+# =============================
+# ฟังก์ชัน webhook (Webhook)
+# สำหรับรับค่าจาก Line Webhook
+# =============================
+@csrf_exempt
+def webhook(request):
+    if request.method == 'POST':
+        signature = request.headers['X-Line-Signature']
+
+        # Get request body as text
+        body = request.body.decode('utf-8')
+
+        # Handle webhook body
+        try:
+            handler.handle(body, signature)
+        except InvalidSignatureError:
+            return HttpResponseBadRequest()
+        return HttpResponse()
+    else:
+        return HttpResponseBadRequest()
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+
+    # Log group_id or use it as needed
+    print(event.source.group_id)
+
+
+# =============================
+# ฟังก์ชัน ส่ง Line Message
+# สำหรับการส่ง Line Message ไปยังกลุ่มที่กำหนด
+# =============================
+def send_line_message(group_id, message):
+    line_bot_api.push_message(group_id, TextSendMessage(text=message))
 
 
 # =============================
@@ -167,9 +219,9 @@ class RequestPandhamView(FormView):
 
         if requested or waiting_list:
             if waiting_list:
-                message = "คุณได้ขอรับหนังสือปันธรรมเล่มนี้แล้ว อยู่ในรายการรอการจัดส่ง"
+                message = "คุณได้ขอรับหนังสือปันธรรมเล่มนี้แล้ว อยู่ในรายการรอหนังสือเ"
             else:
-                message = "คุณได้ขอรับหนังสือปันธรรมเล่มนี้แล้ว"
+                message = "คุณได้ขอรับหนังสือปันธรรมเล่มนี้แล้ว อยู่ระหว่างการดำเนินการ"
             context = self.get_context_data()
             context.update({
                 'result': message,
@@ -238,6 +290,7 @@ class RequestPandhamVerifyOTPView(FormView):
                     # อัปเดต form_data ใน session ด้วยค่า OTP ที่ได้รับ
                     form_data = self.request.session.get('form_data', {})
                     request_pandham = self.create_request_pandham(form_data, otp_entered)
+                    send_line_messaage(group_id, message)
 
                     # ลบ 'form_data' และ 'pandham_stock' ออกจาก session
                     self.request.session.pop('form_data', None)

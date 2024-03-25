@@ -467,6 +467,7 @@ class RequestPandham(models.Model):
     )
     # ข้อตกลงการรับปันธรรม
     accept_terms = models.BooleanField(
+        default = False,
         verbose_name="ยอมรับเงื่อนไขการรับหนังสือ",
     )
     # อ้างอิงรายการสนับสนุนการพิมพ์

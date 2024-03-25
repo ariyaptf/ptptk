@@ -6,6 +6,14 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 mt-3">
                 <h3>ขอรับปันธรรม</h3>
+
+                <!-- แสดงข้อความตอบกลับหลังจาก submit form -->
+                {% if result %}
+                    <div class="alert alert-info" role="alert">
+                        {{ result }}
+                    </div>
+                {% endif %}
+
                 <!-- แสดงค่า book_inventory เป็นข้อความ -->
                 <div class="sarabun-bold pt-3">
                     {{ book.book_name }}
@@ -16,12 +24,6 @@
                 <div class="sarabun-thin">
                     {{ book.prerequisites }}
                 </div>
-                <!-- แสดงข้อความตอบกลับหลังจาก submit form -->
-                {% if result %}
-                    <div class="alert alert-info" role="alert">
-                        {{ result }}
-                    </div>
-                {% endif %}
 
                 <div class="page-content my-3">
                     {% if inventory_stock %}

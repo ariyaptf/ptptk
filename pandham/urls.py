@@ -2,7 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('resend-otp/', views.ResendOTP, name='resend_otp'),
+    # messages
+    path('resend-otp/', views.resend_otp, name='resend_otp'),
+    path('webhook/', views.webhook, name='webhook'),
     # request pandham
     path('request-pandham/<int:book_id>/', views.RequestPandhamView.as_view(), name='request_pandham'),
     path('request-pandham-verify-otp/', views.RequestPandhamVerifyOTPView.as_view(), name='request_pandham_verify_otp'),
